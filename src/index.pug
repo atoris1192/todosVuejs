@@ -1,0 +1,74 @@
+extends _layout
+block content
+  #app
+    h1 チュートリアルToDoリスト
+    // ★STEP11
+    label(v-for="label in options")
+      input(type="radio" v-model="current" v-bind:value="label.value")
+      | {{ label.label }}
+    // ★STEP12
+    | （{{ computedTodos.length }} 件を表示）
+    // ★STEP4 リスト用テーブル
+    table
+      thead(v-pre="")
+        tr
+          th.id ID
+          th.comment コメント
+          th.state 状態
+          th.button -
+      tbody
+        // ★STEP5 ToDo の要素をループ
+        tr(v-for="item in computedTodos" v-bind:key="item.id" v-bind:class="{done:item.state}")
+          th {{ item.id }}
+          td {{ item.comment }}
+          td.state
+            // ★STEP10 状態変更ボタン
+            button(v-on:click="doChangeState(item)")
+              | {{ labels[item.state] }}
+          td.button
+            // ★STEP10 削除ボタン
+            button(v-on:click="doRemove(item)")
+              | 削除
+    // <p>※削除ボタンはコントロールキーを押しながらクリックして下さい</p>
+    // ★STEP6
+    h2 新しい作業の追加
+    form.add-form(v-on:submit.prevent="doAdd")
+      // コメント入力フォーム
+      | コメント 
+      input(type="text" ref="comment")
+      // 追加ボタンのモック
+      button(type="submit") 追加
+
+
+
+
+    //- h1 Todo list
+    //- label(v-for="label in options")
+    //-   input(type="radio"
+    //-     v-model="current"
+    //-     :value="label.value")
+    //-   | {{ labels[item.state] }}
+    //- table
+    //-   thead(v-pre)
+    //-     tr
+    //-       th.id ID
+    //-       th.comment コメント
+    //-       th.state 状態
+    //-       th.button -
+    //-   tbody
+    //-     tr(v-for="item in computedTodos" :key=item.id)
+    //-       th {{ item.id }}
+    //-       td {{ item.comment }}
+    //-       td.state
+    //-         button(@click="doChangeState(item)")
+    //-           {{ label[item.state] }}
+    //-       td.button
+    //-         button(@click="doRemove(item)") 削除
+    //- h2 追加
+    //- form.add-form(@:submit.prevent="doAdd")
+    //-   | コメント
+    //-   input(type="text" ref="comment")
+    //-   button(type="submit") 追加
+
+
+  
